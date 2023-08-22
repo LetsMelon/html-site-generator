@@ -1,0 +1,10 @@
+.coding_block {
+    margin-left: 0px;
+    max-width: 500px;
+}
+
+@media screen and (min-width: 450px) {
+    .coding_block {
+        margin-left: 10px;
+    }
+}
