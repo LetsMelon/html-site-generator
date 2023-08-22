@@ -1,9 +1,10 @@
 [package]
 name = "html-site-generator"
-version = "0.0.1"
+version = "0.0.1-alpha"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/LetsMelon/html-site-generator"
+description = "Build a html file blazingly fast in Rust"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
