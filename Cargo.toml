@@ -11,4 +11,3 @@ description = "Build a html file blazingly fast in Rust"
 [dependencies]
 anyhow = "1.0.71"
 chrono = { version = "0.4.26" }
-new_string_template = "1.4.0"
