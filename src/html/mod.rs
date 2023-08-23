@@ -12,7 +12,7 @@ pub trait IntoHtmlNode: Debug {
     fn transform_into_html_node(&self, buffer: &mut Box<dyn Write>) -> Result<()>;
 }
 
-impl<S: AsRef<str> + std::fmt::Debug> IntoHtmlNode for S {
+impl<S: AsRef<str> + Debug> IntoHtmlNode for S {
     fn transform_into_html_node(&self, buffer: &mut Box<dyn Write>) -> Result<()> {
         let s = self.as_ref();
 
@@ -26,7 +26,7 @@ pub trait IsParagraph: Debug {
     fn to_raw(&self) -> String;
 }
 
-impl<S: AsRef<str> + std::fmt::Debug> IsParagraph for S {
+impl<S: AsRef<str> + Debug> IsParagraph for S {
     fn to_raw(&self) -> String {
         self.as_ref().to_string()
     }
