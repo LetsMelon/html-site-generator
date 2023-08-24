@@ -1,10 +1,12 @@
 use std::io::Write;
 
 use anyhow::Result;
+use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
 use crate::html::IntoHtmlNode;
 
-#[derive(Debug)]
+#[add_attributes_field]
+#[derive(Debug, DeriveSetHtmlAttributes)]
 pub struct Div {
     elements: Vec<Box<dyn IntoHtmlNode>>,
 }
@@ -12,6 +14,7 @@ pub struct Div {
 impl Div {
     pub fn new() -> Self {
         Div {
+            _attributes: Default::default(),
             elements: Vec::new(),
         }
     }
@@ -22,8 +25,10 @@ impl Div {
 }
 
 impl IntoHtmlNode for Div {
-    fn transform_into_html_node(&self, buffer: &mut Box<dyn Write>) -> Result<()> {
-        writeln!(buffer, "<div>")?;
+    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+        write!(buffer, "<div")?;
+        self._attributes.transform_into_html_node(buffer)?;
+        writeln!(buffer, ">")?;
 
         for element in &self.elements {
             element.transform_into_html_node(buffer)?;

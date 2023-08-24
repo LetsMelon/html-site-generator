@@ -1,10 +1,12 @@
 use std::io::Write;
 
 use anyhow::Result;
+use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
 use crate::html::{IntoHtmlNode, IsParagraph};
 
-#[derive(Debug)]
+#[add_attributes_field]
+#[derive(Debug, DeriveSetHtmlAttributes)]
 pub struct Paragraph {
     elements: Vec<Box<dyn IsParagraph>>,
 }
@@ -12,6 +14,7 @@ pub struct Paragraph {
 impl Paragraph {
     pub fn new() -> Self {
         Paragraph {
+            _attributes: Default::default(),
             elements: Vec::new(),
         }
     }
@@ -35,7 +38,7 @@ impl IsParagraph for Paragraph {
 }
 
 impl IntoHtmlNode for Paragraph {
-    fn transform_into_html_node(&self, buffer: &mut Box<dyn Write>) -> Result<()> {
+    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
         writeln!(buffer, "<p>")?;
 
         writeln!(buffer, "{}", self.to_raw())?;

@@ -1,6 +1,7 @@
 use std::io::Write;
 
 use anyhow::Result;
+use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
 use crate::html::IntoHtmlNode;
 
@@ -12,15 +13,16 @@ pub enum ListType {
 }
 
 impl ListType {
-    fn get_tags(&self) -> [&str; 2] {
+    fn get_tags(&self) -> &str {
         match self {
-            ListType::Ordered => ["<ol>", "</ol>"],
-            ListType::Unordered => ["<ul>", "</ul>"],
+            ListType::Ordered => "ol",
+            ListType::Unordered => "ul",
         }
     }
 }
 
-#[derive(Debug)]
+#[add_attributes_field]
+#[derive(Debug, DeriveSetHtmlAttributes)]
 pub struct List {
     elements: Vec<Box<dyn IntoHtmlNode>>,
     list_type: ListType,
@@ -28,9 +30,14 @@ pub struct List {
 
 impl List {
     pub fn new() -> Self {
+        Self::new_with_ordering(ListType::default())
+    }
+
+    pub fn new_with_ordering(ordering: ListType) -> Self {
         List {
             elements: Vec::new(),
-            list_type: ListType::default(),
+            list_type: ordering,
+            _attributes: Default::default(),
         }
     }
 
@@ -40,10 +47,12 @@ impl List {
 }
 
 impl IntoHtmlNode for List {
-    fn transform_into_html_node(&self, buffer: &mut Box<dyn Write>) -> Result<()> {
-        let [suffix, prefix] = self.list_type.get_tags();
+    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+        let symbol = self.list_type.get_tags();
 
-        writeln!(buffer, "{}", suffix)?;
+        write!(buffer, "<{}", symbol)?;
+        self._attributes.transform_into_html_node(buffer)?;
+        writeln!(buffer, ">")?;
 
         for element in &self.elements {
             writeln!(buffer, "<li>")?;
@@ -53,7 +62,7 @@ impl IntoHtmlNode for List {
             writeln!(buffer, "</li>")?;
         }
 
-        writeln!(buffer, "{}", prefix)?;
+        writeln!(buffer, "</{}>", symbol)?;
 
         Ok(())
     }
