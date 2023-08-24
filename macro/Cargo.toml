@@ -12,5 +12,5 @@ description = "Procedural macros for crate 'html-site-generator'. Build a html f
 proc-macro = true
 
 [dependencies]
-syn = { version = "1.0", features = ["derive"] }
+syn = { version = "1.0", features = ["derive", "full"] }
 quote = "1.0"
