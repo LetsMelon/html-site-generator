@@ -5,6 +5,9 @@ edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/LetsMelon/html-site-generator"
 description = "Procedural macros for crate 'html-site-generator'. Build a html file blazingly fast in Rust"
+readme = "../README.md"
+keywords = ["html", "macro"]
+documentation = "https://docs.rs/html-site-generator-macro/"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
