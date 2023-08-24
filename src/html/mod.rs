@@ -5,9 +5,17 @@ use anyhow::Result;
 
 use self::paragraph::Paragraph;
 
+pub mod address;
+pub mod body;
 pub mod div;
+pub mod document;
+pub mod footer;
+pub mod head;
 pub mod hyperlink;
+pub mod line_break;
+pub mod link;
 pub mod list;
+pub mod meta;
 pub mod paragraph;
 pub mod text;
 

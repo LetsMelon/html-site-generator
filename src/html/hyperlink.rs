@@ -20,7 +20,7 @@ pub enum ReferrerPolicy {
 }
 
 impl ReferrerPolicy {
-    fn to_html_string(&self) -> &'static str {
+    pub(crate) fn to_html_string(&self) -> &'static str {
         match self {
             ReferrerPolicy::NoReferrer => "no-referrer",
             ReferrerPolicy::NoReferrerWhenDowngrade => "no-referrer-when-downgrade",
@@ -122,14 +122,11 @@ pub struct Hyperlink {
     referrer_policy: Option<ReferrerPolicy>,
 
     /// Specifies the relationship between the current document and the linked document
-    #[builder(
-        setter(strip_option),
-        default = "Some(vec![Relationship::NoOpener, Relationship::NoReferrer])"
-    )]
+    #[builder(default = "Some(vec![Relationship::NoOpener, Relationship::NoReferrer])")]
     rel: Option<Vec<Relationship>>,
 
     /// Specifies where to open the linked document
-    #[builder(setter(strip_option), default = "Some(Target::Blank)")]
+    #[builder(default = "Some(Target::Blank)")]
     target: Option<Target>,
 
     // TODO maybe use a crate with mime types
