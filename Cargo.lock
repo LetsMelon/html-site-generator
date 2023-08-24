@@ -152,7 +152,7 @@ dependencies = [
 
 [[package]]
 name = "html-site-generator-macro"
-version = "0.1.0"
+version = "0.0.1-alpha"
 dependencies = [
  "quote",
  "syn 1.0.109",
