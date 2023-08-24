@@ -14,7 +14,7 @@ pub enum CrossOrigin {
 }
 
 impl CrossOrigin {
-    fn to_html_string(&self) -> &'static str {
+    pub(crate) fn to_html_string(&self) -> &'static str {
         match self {
             CrossOrigin::Anonymous => "anonymous",
             CrossOrigin::UseCredentials => "use-credentials",

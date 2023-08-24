@@ -150,6 +150,7 @@ impl Hyperlink {
 impl IntoHtmlNode for Hyperlink {
     fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
         write!(buffer, "<a")?;
+        self._attributes.transform_into_html_node(buffer)?;
 
         if let Some(value) = &self.download {
             write!(buffer, " download=\"{}\"", value)?;
@@ -167,7 +168,7 @@ impl IntoHtmlNode for Hyperlink {
             write!(buffer, " ping=\"{}\"", value)?;
         }
         if let Some(value) = &self.referrer_policy {
-            write!(buffer, "  referrerpolicy=\"{}\"", value.to_html_string())?;
+            write!(buffer, " referrerpolicy=\"{}\"", value.to_html_string())?;
         }
         if let Some(value) = &self.rel {
             let raw = value
@@ -199,8 +200,10 @@ impl IntoHtmlNode for Hyperlink {
     }
 }
 
-// TODO I'm not quit sure that `Hyperlink` implements the trait `IsParagraph`.
+// TODO I'm not quit sure if `Hyperlink` implements the trait `IsParagraph`.
+// But at the moment this is the only way to use `Hyperlink` in a `Paragraph`
 // Maybe there is another, and better way, to do this?
+// same as `Image`, `LineBreak`
 impl IsParagraph for Hyperlink {
     fn to_raw(&self) -> String {
         let mut vec = Vec::new();
