@@ -3,6 +3,7 @@ use std::io::Write;
 use anyhow::Result;
 use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
+use crate::attributes::{self, HtmlAttributes};
 use crate::html::IntoHtmlNode;
 
 #[derive(Debug, Clone, Default)]
@@ -24,7 +25,7 @@ impl ListType {
 #[add_attributes_field]
 #[derive(Debug, DeriveSetHtmlAttributes)]
 pub struct List {
-    elements: Vec<Box<dyn IntoHtmlNode>>,
+    elements: Vec<(Box<dyn IntoHtmlNode>, HtmlAttributes)>,
     list_type: ListType,
 }
 
@@ -42,7 +43,15 @@ impl List {
     }
 
     pub fn add_element(&mut self, item: impl IntoHtmlNode + 'static) {
-        self.elements.push(Box::new(item))
+        self.add_element_with_attributes(item, HtmlAttributes::default())
+    }
+
+    pub fn add_element_with_attributes(
+        &mut self,
+        item: impl IntoHtmlNode + 'static,
+        attributes: HtmlAttributes,
+    ) {
+        self.elements.push((Box::new(item), attributes))
     }
 }
 
@@ -54,8 +63,10 @@ impl IntoHtmlNode for List {
         self._attributes.transform_into_html_node(buffer)?;
         writeln!(buffer, ">")?;
 
-        for element in &self.elements {
-            writeln!(buffer, "<li>")?;
+        for (element, attribute) in &self.elements {
+            write!(buffer, "<li")?;
+            attribute.transform_into_html_node(buffer)?;
+            writeln!(buffer, ">")?;
 
             element.transform_into_html_node(buffer)?;
 
