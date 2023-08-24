@@ -1,12 +1,15 @@
 use std::io::Write;
 
 use anyhow::Result;
+use derive_builder::Builder;
 
 use crate::html::IntoHtmlNode;
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Builder)]
 pub struct HtmlAttributes {
+    #[builder(setter(strip_option, into), default)]
     class: Option<String>,
+    #[builder(setter(strip_option, into), default)]
     id: Option<String>,
 }
 
