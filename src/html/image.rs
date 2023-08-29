@@ -121,7 +121,7 @@ impl IntoHtmlNode for Image {
     }
 }
 
-// TODO I'm not quit sure if `Image` implements the trait `IsParagraph`.
+// TODO I'm not quit sure if `Image` should implement the trait `IsParagraph`.
 // But at the moment this is the only way to use `Hyperlink` in a `Paragraph`
 // Maybe there is another, and better way, to do this?
 // same as `Hyperlink`, `LineBreak`
