@@ -3,6 +3,7 @@ use std::io::Write;
 
 use anyhow::Result;
 
+pub mod abbr;
 pub mod address;
 pub mod body;
 pub mod div;

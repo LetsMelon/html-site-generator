@@ -62,11 +62,18 @@ pub trait SetHtmlAttributes {
         let attributes = self.get_attributes_mut();
         attributes.id = None
     }
+
+    fn set_title<S: Into<String>>(&mut self, value: S) {
+        let attributes = self.get_attributes_mut();
+        attributes.title = Some(value.into());
+    }
 }
 
 impl IntoHtmlNode for HtmlAttributes {
     fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
-        write!(buffer, " class=\"{}\"", self.class.join(" "))?;
+        if !self.class.is_empty() {
+            write!(buffer, " class=\"{}\"", self.class.join(" "))?;
+        }
 
         if let Some(id) = &self.id {
             write!(buffer, " id=\"{}\"", id)?;
