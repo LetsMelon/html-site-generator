@@ -18,10 +18,10 @@ pub fn add_attributes_field(args: TokenStream, input: TokenStream) -> TokenStrea
         );
     }
 
-    return quote! {
+    quote! {
         #item_struct
     }
-    .into();
+    .into()
 }
 
 #[proc_macro_derive(DeriveSetHtmlAttributes)]

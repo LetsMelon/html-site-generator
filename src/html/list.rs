@@ -3,7 +3,7 @@ use std::io::Write;
 use anyhow::Result;
 use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
-use crate::attributes::{self, HtmlAttributes};
+use crate::attributes::HtmlAttributes;
 use crate::html::IntoHtmlNode;
 
 #[derive(Debug, Clone, Default)]
