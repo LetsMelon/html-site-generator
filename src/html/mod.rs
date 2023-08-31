@@ -46,3 +46,31 @@ impl<S: AsRef<str> + Debug> IsParagraph for S {
         self.as_ref().to_string()
     }
 }
+
+// TODO I'm not quit sure if that is the correct way to have a macro only in the crate, I think I have to redo this sometime in the future. PR's or welcome
+#[cfg(test)]
+mod test_harness {
+    // TODO add some docs about the usage of this macro
+    macro_rules! test_generates_correct_html {
+        ($name:ident, $code:expr) => {
+            #[test]
+            fn $name() {
+                use html_parser::Dom;
+
+                use crate::html::IntoHtmlNode;
+
+                let item = $code;
+
+                let mut buffer = Vec::new();
+                item.transform_into_html_node(&mut buffer).unwrap();
+                let html = String::from_utf8(buffer).unwrap();
+                assert!(Dom::parse(&html).is_ok());
+            }
+        };
+        ($code:expr) => {
+            test_generates_correct_html!(generates_correct_html, { $code });
+        };
+    }
+
+    pub(crate) use test_generates_correct_html;
+}
