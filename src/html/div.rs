@@ -39,3 +39,18 @@ impl IntoHtmlNode for Div {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Div;
+    use crate::html::test_harness::test_generates_correct_html;
+
+    test_generates_correct_html!(generates_correct_html_empty, { Div::new() });
+
+    test_generates_correct_html!({
+        let mut d = Div::new();
+        d.add_element("My text inside a div!");
+
+        d
+    });
+}

@@ -34,3 +34,19 @@ impl IntoHtmlNode for Address {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Address;
+    use crate::html::test_harness::test_generates_correct_html;
+
+    test_generates_correct_html!(generates_correct_html_empty, { Address::new() });
+
+    test_generates_correct_html!({
+        let mut a = Address::new();
+
+        a.add_element("Cou can write mails to: PRIVATE");
+
+        a
+    });
+}
