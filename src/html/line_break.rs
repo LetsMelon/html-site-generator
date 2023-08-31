@@ -34,3 +34,22 @@ impl IsParagraph for LineBreak {
         String::from_utf8(vec).unwrap()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::LineBreak;
+    use crate::html::paragraph::Paragraph;
+    use crate::html::test_harness::test_generates_correct_html;
+
+    test_generates_correct_html!(LineBreak::new());
+
+    test_generates_correct_html!(generates_correct_html_inside_paragraph, {
+        let mut p = Paragraph::new();
+
+        p.add_element("Hey!");
+        p.add_element(LineBreak::new());
+        p.add_element("I'm on the next line!");
+
+        p
+    });
+}
