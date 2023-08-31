@@ -35,6 +35,7 @@ mod tests {
     use super::Abbr;
     use crate::attributes::SetHtmlAttributes;
     use crate::html::paragraph::Paragraph;
+    use crate::html::test_harness::test_generates_correct_html;
     use crate::html::IsParagraph;
 
     #[test]
@@ -63,4 +64,16 @@ mod tests {
             "The next word is a <abbr title=\"Some html element\">Abbr</abbr>!"
         );
     }
+
+    test_generates_correct_html!({
+        let mut p = Paragraph::new();
+        p.add_element("The next word is a ");
+        p.add_element({
+            let mut a = Abbr::new("Abbr");
+            a.set_title("Some html element");
+            a
+        });
+        p.add_element("!");
+        p
+    });
 }
