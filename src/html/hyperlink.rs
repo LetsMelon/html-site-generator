@@ -213,3 +213,42 @@ impl IsParagraph for Hyperlink {
         String::from_utf8(vec).unwrap()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    mod hyperlink {
+        use crate::html::hyperlink::HyperlinkBuilder;
+        use crate::html::paragraph::Paragraph;
+        use crate::html::test_harness::test_generates_correct_html;
+
+        test_generates_correct_html!(generates_correct_html_builder, {
+            HyperlinkBuilder::default().build().unwrap()
+        });
+
+        test_generates_correct_html!(generates_correct_with_child, {
+            let mut h = HyperlinkBuilder::default().build().unwrap();
+            h.add_element("Link to crates.io");
+
+            h
+        });
+
+        test_generates_correct_html!(generates_correct_inside_a_paragraph, {
+            let mut p = Paragraph::new();
+
+            p.add_element("Links to ");
+
+            p.add_element({
+                let mut h = HyperlinkBuilder::default()
+                    .href("https://crates.io/")
+                    .build()
+                    .unwrap();
+                h.add_element("crates.io");
+                h
+            });
+
+            p.add_element("!");
+
+            p
+        });
+    }
+}
