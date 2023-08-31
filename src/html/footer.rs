@@ -34,3 +34,17 @@ impl IntoHtmlNode for Footer {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Footer;
+    use crate::html::test_harness::test_generates_correct_html;
+
+    test_generates_correct_html!({
+        let mut f = Footer::new();
+
+        f.add_element("Hihi, I'm a footer!");
+
+        f
+    });
+}
