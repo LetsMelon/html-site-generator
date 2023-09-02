@@ -1,3 +1,5 @@
+use std::io::Write;
+
 use crate::html::body::Body;
 use crate::html::head::Head;
 use crate::html::IntoHtmlNode;
@@ -15,7 +17,7 @@ impl Document {
 }
 
 impl IntoHtmlNode for Document {
-    fn transform_into_html_node(&self, buffer: &mut dyn std::io::Write) -> anyhow::Result<()> {
+    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
         writeln!(buffer, "<!DOCTYPE html>")?;
         writeln!(buffer, "<html>")?;
 

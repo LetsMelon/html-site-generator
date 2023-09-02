@@ -3,6 +3,8 @@ use std::io::Write;
 
 use anyhow::Result;
 
+use crate::raw_writer::RawWriter;
+
 pub mod abbr;
 pub mod address;
 pub mod body;
@@ -22,6 +24,26 @@ pub mod title;
 
 pub trait IntoHtmlNode: Debug {
     fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()>;
+
+    #[allow(unused)]
+    fn transform_into_html_node_css(&self, buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    #[allow(unused)]
+    fn transform_into_html_node_js(&self, buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    fn transform_into_html_node_with_css_and_js(&self, writer: &mut RawWriter) -> Result<()> {
+        let (mut html_writer, mut css_writer, mut js_writer) = writer.writers();
+
+        self.transform_into_html_node(&mut html_writer)?;
+        self.transform_into_html_node_css(&mut css_writer)?;
+        self.transform_into_html_node_js(&mut js_writer)?;
+
+        Ok(())
+    }
 }
 
 impl<S: AsRef<str> + Debug> IntoHtmlNode for S {
