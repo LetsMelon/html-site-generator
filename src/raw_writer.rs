@@ -15,6 +15,10 @@ macro_rules! generate_holder_struct {
                     data: Default::default(),
                 }
             }
+
+            pub fn data(&self) -> &[u8] {
+                &self.data
+            }
         }
 
         impl std::io::Write for $name {
