@@ -4,7 +4,8 @@
 
 ## Breaking
 
-- renamed `SetHtmlAttributes::set_class` to `SetHtmlAttributes::add_class` 
+- renamed `SetHtmlAttributes::set_class` to `SetHtmlAttributes::add_class`
+- changed signature from `HtmlAttributesBuilder::class<S: Into<String>>(S)` to `HtmlAttributesBuilder::class<VS: Into<Vec<String>>>(VS)`
 
 # 0.0.1
 
