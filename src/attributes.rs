@@ -67,6 +67,11 @@ pub trait SetHtmlAttributes {
         let attributes = self.get_attributes_mut();
         attributes.title = Some(value.into());
     }
+
+    fn set_style<S: Into<String>>(&mut self, value: S) {
+        let attributes = self.get_attributes_mut();
+        attributes.style = Some(value.into())
+    }
 }
 
 impl IntoHtmlNode for HtmlAttributes {
