@@ -70,7 +70,7 @@ pub trait SetHtmlAttributes {
 }
 
 impl IntoHtmlNode for HtmlAttributes {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         if !self.class.is_empty() {
             write!(buffer, " class=\"{}\"", self.class.join(" "))?;
         }
@@ -99,6 +99,14 @@ impl IntoHtmlNode for HtmlAttributes {
             write!(buffer, " title=\"{}\"", index)?;
         }
 
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
         Ok(())
     }
 }

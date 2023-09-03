@@ -14,9 +14,17 @@ impl LineBreak {
 }
 
 impl IntoHtmlNode for LineBreak {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         write!(buffer, "<br />")?;
 
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
         Ok(())
     }
 }
@@ -29,7 +37,7 @@ impl IsParagraph for LineBreak {
     fn to_raw(&self) -> String {
         let mut vec = Vec::new();
 
-        self.transform_into_html_node(&mut vec).unwrap();
+        self.transform_into_raw_html(&mut vec).unwrap();
 
         String::from_utf8(vec).unwrap()
     }

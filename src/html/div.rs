@@ -25,16 +25,36 @@ impl Div {
 }
 
 impl IntoHtmlNode for Div {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         write!(buffer, "<div")?;
-        self._attributes.transform_into_html_node(buffer)?;
+        self._attributes.transform_into_raw_html(buffer)?;
         writeln!(buffer, ">")?;
 
         for element in &self.elements {
-            element.transform_into_html_node(buffer)?;
+            element.transform_into_raw_html(buffer)?;
         }
 
         writeln!(buffer, "</div>")?;
+
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+        self._attributes.transform_into_raw_css(buffer)?;
+
+        for element in &self.elements {
+            element.transform_into_raw_css(buffer)?;
+        }
+
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+        self._attributes.transform_into_raw_js(buffer)?;
+
+        for element in &self.elements {
+            element.transform_into_raw_js(buffer)?;
+        }
 
         Ok(())
     }

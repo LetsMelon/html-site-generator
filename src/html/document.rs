@@ -17,14 +17,28 @@ impl Document {
 }
 
 impl IntoHtmlNode for Document {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
         writeln!(buffer, "<!DOCTYPE html>")?;
         writeln!(buffer, "<html>")?;
 
-        self.head.transform_into_html_node(buffer)?;
-        self.body.transform_into_html_node(buffer)?;
+        self.head.transform_into_raw_html(buffer)?;
+        self.body.transform_into_raw_html(buffer)?;
 
         writeln!(buffer, "</html>")?;
+
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+        self.head.transform_into_raw_css(buffer)?;
+        self.body.transform_into_raw_css(buffer)?;
+
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+        self.head.transform_into_raw_js(buffer)?;
+        self.body.transform_into_raw_js(buffer)?;
 
         Ok(())
     }

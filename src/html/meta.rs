@@ -23,7 +23,7 @@ impl Meta {
 }
 
 impl IntoHtmlNode for Meta {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         write!(buffer, "<meta")?;
 
         for (key, value) in self.values.iter() {
@@ -32,6 +32,14 @@ impl IntoHtmlNode for Meta {
 
         writeln!(buffer, "/>")?;
 
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
         Ok(())
     }
 }

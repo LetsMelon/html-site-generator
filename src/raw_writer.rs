@@ -109,19 +109,19 @@ impl RawWriter {
 }
 
 impl IntoHtmlNode for RawWriter {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
         buffer.write_all(&self.data_html.data)?;
 
         Ok(())
     }
 
-    fn transform_into_html_node_css(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
         buffer.write_all(&self.data_css.data)?;
 
         Ok(())
     }
 
-    fn transform_into_html_node_js(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
         buffer.write_all(&self.data_js.data)?;
 
         Ok(())

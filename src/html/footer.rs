@@ -22,14 +22,30 @@ impl Footer {
 }
 
 impl IntoHtmlNode for Footer {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         writeln!(buffer, "<footer>")?;
 
         for element in &self.elements {
-            element.transform_into_html_node(buffer)?;
+            element.transform_into_raw_html(buffer)?;
         }
 
         writeln!(buffer, "</footer>")?;
+
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+        for element in &self.elements {
+            element.transform_into_raw_css(buffer)?;
+        }
+
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+        for element in &self.elements {
+            element.transform_into_raw_js(buffer)?;
+        }
 
         Ok(())
     }

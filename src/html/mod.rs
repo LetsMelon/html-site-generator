@@ -23,31 +23,23 @@ pub mod text;
 pub mod title;
 
 pub trait IntoHtmlNode: Debug {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()>;
-
-    #[allow(unused)]
-    fn transform_into_html_node_css(&self, buffer: &mut dyn Write) -> Result<()> {
-        Ok(())
-    }
-
-    #[allow(unused)]
-    fn transform_into_html_node_js(&self, buffer: &mut dyn Write) -> Result<()> {
-        Ok(())
-    }
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()>;
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()>;
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()>;
 
     fn transform_into_html_node_with_css_and_js(&self, writer: &mut RawWriter) -> Result<()> {
         let (mut html_writer, mut css_writer, mut js_writer) = writer.writers();
 
-        self.transform_into_html_node(&mut html_writer)?;
-        self.transform_into_html_node_css(&mut css_writer)?;
-        self.transform_into_html_node_js(&mut js_writer)?;
+        self.transform_into_raw_html(&mut html_writer)?;
+        self.transform_into_raw_css(&mut css_writer)?;
+        self.transform_into_raw_js(&mut js_writer)?;
 
         Ok(())
     }
 }
 
 impl<S: AsRef<str> + Debug> IntoHtmlNode for S {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         let s = self.as_ref().to_string();
 
         // let mut p = Paragraph::new();
@@ -55,6 +47,14 @@ impl<S: AsRef<str> + Debug> IntoHtmlNode for S {
         // p.transform_into_html_node(buffer)?;
         buffer.write_all(s.as_bytes())?;
 
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
         Ok(())
     }
 }
@@ -84,7 +84,7 @@ mod test_harness {
                 let item = $code;
 
                 let mut buffer = Vec::new();
-                item.transform_into_html_node(&mut buffer).unwrap();
+                item.transform_into_raw_html(&mut buffer).unwrap();
                 let html = String::from_utf8(buffer).unwrap();
                 assert!(Dom::parse(&html).is_ok());
             }

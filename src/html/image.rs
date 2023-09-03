@@ -85,9 +85,9 @@ pub struct Image {
 }
 
 impl IntoHtmlNode for Image {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         write!(buffer, "<img")?;
-        self._attributes.transform_into_html_node(buffer)?;
+        self._attributes.transform_into_raw_html(buffer)?;
 
         if let Some(value) = &self.alt {
             write!(buffer, " alt=\"{}\"", value)?;
@@ -119,6 +119,18 @@ impl IntoHtmlNode for Image {
 
         Ok(())
     }
+
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+        self._attributes.transform_into_raw_css(buffer)?;
+
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+        self._attributes.transform_into_raw_js(buffer)?;
+
+        Ok(())
+    }
 }
 
 // TODO I'm not quit sure if `Image` should implement the trait `IsParagraph`.
@@ -129,7 +141,7 @@ impl IsParagraph for Image {
     fn to_raw(&self) -> String {
         let mut vec = Vec::new();
 
-        self.transform_into_html_node(&mut vec).unwrap();
+        self.transform_into_raw_html(&mut vec).unwrap();
 
         String::from_utf8(vec).unwrap()
     }
