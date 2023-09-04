@@ -1,6 +1,5 @@
 use std::io::Write;
 
-use anyhow::Result;
 use derive_builder::Builder;
 use html_site_generator_macro::DeriveSetHtmlAttributes;
 
@@ -8,6 +7,7 @@ use super::hyperlink::ReferrerPolicy;
 use super::link::CrossOrigin;
 use super::{IntoHtmlNode, IsParagraph};
 use crate::attributes::HtmlAttributes;
+use crate::html::IntoHtmlNodeResult;
 
 /// Specifies whether a browser should load an image immediately or to defer loading of images until some conditions are met
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -85,7 +85,7 @@ pub struct Image {
 }
 
 impl IntoHtmlNode for Image {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         write!(buffer, "<img")?;
         self._attributes.transform_into_raw_html(buffer)?;
 
@@ -120,13 +120,13 @@ impl IntoHtmlNode for Image {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self._attributes.transform_into_raw_css(buffer)?;
 
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self._attributes.transform_into_raw_js(buffer)?;
 
         Ok(())

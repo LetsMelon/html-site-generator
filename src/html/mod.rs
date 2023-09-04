@@ -1,8 +1,7 @@
 use std::fmt::Debug;
 use std::io::Write;
 
-use anyhow::Result;
-
+use crate::error::IntoHtmlNodeError;
 use crate::raw_writer::RawWriter;
 
 pub mod abbr;
@@ -22,12 +21,17 @@ pub mod paragraph;
 pub mod text;
 pub mod title;
 
-pub trait IntoHtmlNode: Debug {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()>;
-    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()>;
-    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()>;
+pub type IntoHtmlNodeResult<T> = Result<T, IntoHtmlNodeError>;
 
-    fn transform_into_html_node_with_css_and_js(&self, writer: &mut RawWriter) -> Result<()> {
+pub trait IntoHtmlNode: Debug {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()>;
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()>;
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()>;
+
+    fn transform_into_html_node_with_css_and_js(
+        &self,
+        writer: &mut RawWriter,
+    ) -> IntoHtmlNodeResult<()> {
         let (mut html_writer, mut css_writer, mut js_writer) = writer.writers();
 
         self.transform_into_raw_html(&mut html_writer)?;
@@ -39,7 +43,7 @@ pub trait IntoHtmlNode: Debug {
 }
 
 impl<S: AsRef<str> + Debug> IntoHtmlNode for S {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         let s = self.as_ref().to_string();
 
         // let mut p = Paragraph::new();
@@ -50,11 +54,11 @@ impl<S: AsRef<str> + Debug> IntoHtmlNode for S {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 }
@@ -79,7 +83,7 @@ mod test_harness {
             fn $name() {
                 use html_parser::Dom;
 
-                use crate::html::IntoHtmlNode;
+                use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
                 let item = $code;
 

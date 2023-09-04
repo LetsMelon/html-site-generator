@@ -1,9 +1,8 @@
 use std::io::Write;
 
-use anyhow::Result;
 use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
-use crate::html::IntoHtmlNode;
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
 #[add_attributes_field]
 #[derive(Debug, DeriveSetHtmlAttributes)]
@@ -25,7 +24,7 @@ impl Div {
 }
 
 impl IntoHtmlNode for Div {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         write!(buffer, "<div")?;
         self._attributes.transform_into_raw_html(buffer)?;
         writeln!(buffer, ">")?;
@@ -39,7 +38,7 @@ impl IntoHtmlNode for Div {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self._attributes.transform_into_raw_css(buffer)?;
 
         for element in &self.elements {
@@ -49,7 +48,7 @@ impl IntoHtmlNode for Div {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self._attributes.transform_into_raw_js(buffer)?;
 
         for element in &self.elements {

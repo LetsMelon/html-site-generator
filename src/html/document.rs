@@ -2,7 +2,7 @@ use std::io::Write;
 
 use crate::html::body::Body;
 use crate::html::head::Head;
-use crate::html::IntoHtmlNode;
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
 #[derive(Debug)]
 pub struct Document {
@@ -17,7 +17,7 @@ impl Document {
 }
 
 impl IntoHtmlNode for Document {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         writeln!(buffer, "<!DOCTYPE html>")?;
         writeln!(buffer, "<html>")?;
 
@@ -29,14 +29,14 @@ impl IntoHtmlNode for Document {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self.head.transform_into_raw_css(buffer)?;
         self.body.transform_into_raw_css(buffer)?;
 
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self.head.transform_into_raw_js(buffer)?;
         self.body.transform_into_raw_js(buffer)?;
 

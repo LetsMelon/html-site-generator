@@ -1,6 +1,6 @@
 use std::io::Write;
 
-use crate::html::IntoHtmlNode;
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
 macro_rules! generate_holder_struct {
     ($name:ident) => {
@@ -74,7 +74,7 @@ impl RawWriter {
         &mut self.data_js
     }
 
-    pub fn transform_into_single_document<W: Write>(self, buffer: &mut W) -> anyhow::Result<()> {
+    pub fn transform_into_single_document<W: Write>(self, buffer: &mut W) -> std::io::Result<()> {
         writeln!(buffer, "<!DOCTYPE html>")?;
         writeln!(buffer, "<html>")?;
         writeln!(buffer, "<head>")?;
@@ -109,19 +109,19 @@ impl RawWriter {
 }
 
 impl IntoHtmlNode for RawWriter {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         buffer.write_all(&self.data_html.data)?;
 
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         buffer.write_all(&self.data_css.data)?;
 
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> anyhow::Result<()> {
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         buffer.write_all(&self.data_js.data)?;
 
         Ok(())

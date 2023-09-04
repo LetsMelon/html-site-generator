@@ -4,6 +4,8 @@
 
 ### Added
 
+- error handling with `thiserror`
+
 ### Breaking
 
 - renamed `SetHtmlAttributes::set_class` to `SetHtmlAttributes::add_class`

@@ -1,11 +1,10 @@
 use std::io::Write;
 
-use anyhow::Result;
 use derive_builder::Builder;
 use html_site_generator_macro::DeriveSetHtmlAttributes;
 
 use crate::attributes::HtmlAttributes;
-use crate::html::{IntoHtmlNode, IsParagraph};
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult, IsParagraph};
 
 /// Specifies which referrer information to send with the link
 #[derive(Debug, Clone)]
@@ -148,7 +147,7 @@ impl Hyperlink {
 }
 
 impl IntoHtmlNode for Hyperlink {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         write!(buffer, "<a")?;
         self._attributes.transform_into_raw_html(buffer)?;
 
@@ -199,7 +198,7 @@ impl IntoHtmlNode for Hyperlink {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self._attributes.transform_into_raw_css(buffer)?;
 
         for child in &self.children {
@@ -209,7 +208,7 @@ impl IntoHtmlNode for Hyperlink {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         self._attributes.transform_into_raw_js(buffer)?;
 
         for child in &self.children {

@@ -1,10 +1,9 @@
 use std::io::Write;
 
-use anyhow::Result;
 use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
 use crate::attributes::HtmlAttributes;
-use crate::html::IntoHtmlNode;
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
 #[derive(Debug, Clone, Default)]
 pub enum ListType {
@@ -56,7 +55,7 @@ impl List {
 }
 
 impl IntoHtmlNode for List {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         let symbol = self.list_type.get_tags();
 
         write!(buffer, "<{}", symbol)?;
@@ -78,7 +77,7 @@ impl IntoHtmlNode for List {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         for (element, _) in &self.elements {
             element.transform_into_raw_css(buffer)?;
         }
@@ -86,7 +85,7 @@ impl IntoHtmlNode for List {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         for (element, _) in &self.elements {
             element.transform_into_raw_js(buffer)?;
         }
