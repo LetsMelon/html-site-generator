@@ -1,19 +1,19 @@
 # Changelog for [`html-site-generator`](https://github.com/LetsMelon/html-site-generator)
 
-# [unreleased](https://github.com/LetsMelon/html-site-generator/compare/0.0.1...main)
+## [unreleased](https://github.com/LetsMelon/html-site-generator/compare/0.0.1...main)
 
-## Added
+### Added
 
-## Breaking
+### Breaking
 
 - renamed `SetHtmlAttributes::set_class` to `SetHtmlAttributes::add_class`
 - renamed `SetHtmlAttributes::set_id` to `SetHtmlAttributes::add_id`
 - changed signature from `HtmlAttributesBuilder::class<S: Into<String>>(S)` to `HtmlAttributesBuilder::class<VS: Into<Vec<String>>>(VS)` (pseudo rust code)
 - removed struct `DateTime`
 
-# [0.0.1](https://github.com/LetsMelon/html-site-generator/compare/b2a039bfe6070bf67435eb44af76597d0e706260...0.0.1)
+## [0.0.1](https://github.com/LetsMelon/html-site-generator/compare/b2a039bfe6070bf67435eb44af76597d0e706260...0.0.1)
 
-## Added
+### Added
 
 - html elements:
   - address
