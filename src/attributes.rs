@@ -1,9 +1,8 @@
 use std::io::Write;
 
-use anyhow::Result;
 use derive_builder::Builder;
 
-use crate::html::IntoHtmlNode;
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
 /// HTML Global Attributes: [link](https://www.w3schools.com/tags/ref_standardattributes.asp)
 #[derive(Debug, Default, Builder)]
@@ -106,7 +105,7 @@ pub trait SetHtmlAttributes {
 }
 
 impl IntoHtmlNode for HtmlAttributes {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         if !self.class.is_empty() {
             write!(buffer, " class=\"{}\"", self.class.join(" "))?;
         }
@@ -138,11 +137,11 @@ impl IntoHtmlNode for HtmlAttributes {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 }

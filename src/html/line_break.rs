@@ -1,8 +1,6 @@
 use std::io::Write;
 
-use anyhow::Result;
-
-use crate::html::{IntoHtmlNode, IsParagraph};
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult, IsParagraph};
 
 #[derive(Debug)]
 pub struct LineBreak;
@@ -14,17 +12,17 @@ impl LineBreak {
 }
 
 impl IntoHtmlNode for LineBreak {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         write!(buffer, "<br />")?;
 
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 }

@@ -1,8 +1,6 @@
 use std::io::Write;
 
-use anyhow::Result;
-
-use crate::html::IntoHtmlNode;
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
 #[derive(Debug)]
 pub struct Title {
@@ -18,17 +16,17 @@ impl Title {
 }
 
 impl IntoHtmlNode for Title {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         writeln!(buffer, "<title>{}</title>", self.text)?;
 
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 }

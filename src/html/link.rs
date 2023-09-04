@@ -1,10 +1,9 @@
 use std::io::Write;
 
-use anyhow::Result;
 use derive_builder::Builder;
 
 use crate::html::hyperlink::ReferrerPolicy;
-use crate::html::IntoHtmlNode;
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult};
 
 /// Specifies how the element handles cross-origin requests
 #[derive(Debug, Clone)]
@@ -106,7 +105,7 @@ pub struct Link {
 }
 
 impl IntoHtmlNode for Link {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         write!(buffer, "<link")?;
 
         if let Some(value) = &self.crossorigin {
@@ -143,11 +142,11 @@ impl IntoHtmlNode for Link {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 }

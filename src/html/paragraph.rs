@@ -1,9 +1,8 @@
 use std::io::Write;
 
-use anyhow::Result;
 use html_site_generator_macro::{add_attributes_field, DeriveSetHtmlAttributes};
 
-use crate::html::{IntoHtmlNode, IsParagraph};
+use crate::html::{IntoHtmlNode, IntoHtmlNodeResult, IsParagraph};
 
 #[add_attributes_field]
 #[derive(Debug, DeriveSetHtmlAttributes)]
@@ -38,7 +37,7 @@ impl IsParagraph for Paragraph {
 }
 
 impl IntoHtmlNode for Paragraph {
-    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         writeln!(buffer, "<p>")?;
 
         writeln!(buffer, "{}", self.to_raw())?;
@@ -48,11 +47,11 @@ impl IntoHtmlNode for Paragraph {
         Ok(())
     }
 
-    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 
-    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         Ok(())
     }
 }
