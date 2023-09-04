@@ -13,7 +13,6 @@ documentation = "https://docs.rs/html-site-generator/"
 
 [dependencies]
 anyhow = "1.0.75"
-chrono = { version = "0.4.28" }
 derive_builder = "0.12.0"
 html-site-generator-macro = { version = "0.0.1", path = "./macro" }
 

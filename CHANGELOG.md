@@ -5,7 +5,9 @@
 ## Breaking
 
 - renamed `SetHtmlAttributes::set_class` to `SetHtmlAttributes::add_class`
-- changed signature from `HtmlAttributesBuilder::class<S: Into<String>>(S)` to `HtmlAttributesBuilder::class<VS: Into<Vec<String>>>(VS)`
+- renamed `SetHtmlAttributes::set_id` to `SetHtmlAttributes::add_id`
+- changed signature from `HtmlAttributesBuilder::class<S: Into<String>>(S)` to `HtmlAttributesBuilder::class<VS: Into<Vec<String>>>(VS)` (pseudo rust code)
+- removed struct `DateTime`
 
 # 0.0.1
 
