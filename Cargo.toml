@@ -19,6 +19,7 @@ html-site-generator-macro = { version = "0.0.1", path = "./macro" }
 
 [dev-dependencies]
 html_parser = "0.7.0"
+proptest = "1.2.0"
 
 [workspace]
 members = ["macro"]

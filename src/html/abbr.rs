@@ -20,7 +20,7 @@ impl Abbr {
 impl IsParagraph for Abbr {
     fn to_raw(&self) -> String {
         let mut vec = Vec::new();
-        self._attributes.transform_into_html_node(&mut vec).unwrap();
+        self._attributes.transform_into_raw_html(&mut vec).unwrap();
 
         format!(
             "<abbr{}>{}</abbr>",

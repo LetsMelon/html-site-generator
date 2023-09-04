@@ -38,13 +38,21 @@ impl IsParagraph for Paragraph {
 }
 
 impl IntoHtmlNode for Paragraph {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         writeln!(buffer, "<p>")?;
 
         writeln!(buffer, "{}", self.to_raw())?;
 
         writeln!(buffer, "</p>")?;
 
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
         Ok(())
     }
 }

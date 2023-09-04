@@ -148,9 +148,9 @@ impl Hyperlink {
 }
 
 impl IntoHtmlNode for Hyperlink {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         write!(buffer, "<a")?;
-        self._attributes.transform_into_html_node(buffer)?;
+        self._attributes.transform_into_raw_html(buffer)?;
 
         if let Some(value) = &self.download {
             write!(buffer, " download=\"{}\"", value)?;
@@ -191,10 +191,30 @@ impl IntoHtmlNode for Hyperlink {
         write!(buffer, ">")?;
 
         for child in &self.children {
-            child.transform_into_html_node(buffer)?;
+            child.transform_into_raw_html(buffer)?;
         }
 
         writeln!(buffer, "</a>")?;
+
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+        self._attributes.transform_into_raw_css(buffer)?;
+
+        for child in &self.children {
+            child.transform_into_raw_css(buffer)?;
+        }
+
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+        self._attributes.transform_into_raw_js(buffer)?;
+
+        for child in &self.children {
+            child.transform_into_raw_js(buffer)?;
+        }
 
         Ok(())
     }
@@ -208,7 +228,7 @@ impl IsParagraph for Hyperlink {
     fn to_raw(&self) -> String {
         let mut vec = Vec::new();
 
-        self.transform_into_html_node(&mut vec).unwrap();
+        self.transform_into_raw_html(&mut vec).unwrap();
 
         String::from_utf8(vec).unwrap()
     }

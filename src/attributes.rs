@@ -13,12 +13,12 @@ pub struct HtmlAttributes {
     class: Vec<String>,
 
     /// Specifies a unique id for an element
-    #[builder(setter(strip_option, into), default)]
-    id: Option<String>,
+    #[builder(setter(into), default)]
+    id: Vec<String>,
 
     /// Specifies whether the content of an element is editable or not
     #[builder(setter, default = "false")]
-    contenteditable: bool,
+    content_editable: bool,
 
     /// Specifies that an element is not yet, or is no longer, relevant
     #[builder(setter, default = "false")]
@@ -37,7 +37,7 @@ pub struct HtmlAttributes {
     title: Option<String>,
 }
 
-// TODO add missing 'get/setter' methods
+// TODO add docs
 pub trait SetHtmlAttributes {
     fn get_attributes(&self) -> &HtmlAttributes;
     fn get_attributes_mut(&mut self) -> &mut HtmlAttributes;
@@ -53,34 +53,70 @@ pub trait SetHtmlAttributes {
         attributes.class = Vec::new()
     }
 
-    fn set_id<S: Into<String>>(&mut self, id: S) {
+    fn add_id<S: Into<String>>(&mut self, id: S) {
         let attributes = self.get_attributes_mut();
-        attributes.id = Some(id.into())
+
+        attributes.id.push(id.into())
     }
 
     fn clear_id(&mut self) {
         let attributes = self.get_attributes_mut();
-        attributes.id = None
+        attributes.id = Vec::new()
+    }
+
+    fn set_content_editable(&mut self, value: bool) {
+        let attributes = self.get_attributes_mut();
+        attributes.content_editable = value;
+    }
+
+    fn set_hidden(&mut self, value: bool) {
+        let attributes = self.get_attributes_mut();
+        attributes.hidden = value;
+    }
+
+    fn set_style<S: Into<String>>(&mut self, value: S) {
+        let attributes = self.get_attributes_mut();
+        attributes.style = Some(value.into())
+    }
+
+    fn clear_style(&mut self) {
+        let attributes = self.get_attributes_mut();
+        attributes.style = None;
+    }
+
+    fn set_tab_index(&mut self, value: usize) {
+        let attributes = self.get_attributes_mut();
+        attributes.tab_index = Some(value);
+    }
+
+    fn clear_tab_index(&mut self) {
+        let attributes = self.get_attributes_mut();
+        attributes.tab_index = None;
     }
 
     fn set_title<S: Into<String>>(&mut self, value: S) {
         let attributes = self.get_attributes_mut();
         attributes.title = Some(value.into());
     }
+
+    fn clear_title(&mut self) {
+        let attributes = self.get_attributes_mut();
+        attributes.title = None;
+    }
 }
 
 impl IntoHtmlNode for HtmlAttributes {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         if !self.class.is_empty() {
             write!(buffer, " class=\"{}\"", self.class.join(" "))?;
         }
 
-        if let Some(id) = &self.id {
-            write!(buffer, " id=\"{}\"", id)?;
+        if !self.id.is_empty() {
+            write!(buffer, " id=\"{}\"", self.id.join(" "))?;
         }
 
-        if self.contenteditable {
-            write!(buffer, " contenteditable=\"{}\"", self.contenteditable)?;
+        if self.content_editable {
+            write!(buffer, " contenteditable=\"{}\"", self.content_editable)?;
         }
 
         if self.hidden {
@@ -99,6 +135,14 @@ impl IntoHtmlNode for HtmlAttributes {
             write!(buffer, " title=\"{}\"", index)?;
         }
 
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, _buffer: &mut dyn Write) -> Result<()> {
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, _buffer: &mut dyn Write) -> Result<()> {
         Ok(())
     }
 }

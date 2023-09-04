@@ -56,24 +56,40 @@ impl List {
 }
 
 impl IntoHtmlNode for List {
-    fn transform_into_html_node(&self, buffer: &mut dyn Write) -> Result<()> {
+    fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> Result<()> {
         let symbol = self.list_type.get_tags();
 
         write!(buffer, "<{}", symbol)?;
-        self._attributes.transform_into_html_node(buffer)?;
+        self._attributes.transform_into_raw_html(buffer)?;
         writeln!(buffer, ">")?;
 
         for (element, attribute) in &self.elements {
             write!(buffer, "<li")?;
-            attribute.transform_into_html_node(buffer)?;
+            attribute.transform_into_raw_html(buffer)?;
             writeln!(buffer, ">")?;
 
-            element.transform_into_html_node(buffer)?;
+            element.transform_into_raw_html(buffer)?;
 
             writeln!(buffer, "</li>")?;
         }
 
         writeln!(buffer, "</{}>", symbol)?;
+
+        Ok(())
+    }
+
+    fn transform_into_raw_css(&self, buffer: &mut dyn Write) -> Result<()> {
+        for (element, _) in &self.elements {
+            element.transform_into_raw_css(buffer)?;
+        }
+
+        Ok(())
+    }
+
+    fn transform_into_raw_js(&self, buffer: &mut dyn Write) -> Result<()> {
+        for (element, _) in &self.elements {
+            element.transform_into_raw_js(buffer)?;
+        }
 
         Ok(())
     }
