@@ -75,34 +75,34 @@ impl RawWriter {
     }
 
     pub fn transform_into_single_document<W: Write>(self, buffer: &mut W) -> std::io::Result<()> {
-        writeln!(buffer, "<!DOCTYPE html>")?;
-        writeln!(buffer, "<html>")?;
-        writeln!(buffer, "<head>")?;
+        write!(buffer, "<!DOCTYPE html>")?;
+        write!(buffer, "<html>")?;
+        write!(buffer, "<head>")?;
 
         // TODO implement writer for head
 
         if !self.data_css.data.is_empty() {
-            writeln!(buffer, "<style>")?;
+            write!(buffer, "<style>")?;
             buffer.write_all(&self.data_css.data)?;
-            writeln!(buffer, "</style>")?;
+            write!(buffer, "</style>")?;
         }
 
         if !self.data_js.data.is_empty() {
-            writeln!(buffer, "<script>")?;
+            write!(buffer, "<script>")?;
             buffer.write_all(&self.data_js.data)?;
-            writeln!(buffer, "</script>")?;
+            write!(buffer, "</script>")?;
         }
 
-        writeln!(buffer, "</head>")?;
+        write!(buffer, "</head>")?;
 
         if !self.data_html.data.is_empty() {
             // TODO check if `self.data_html` contains a `body` already
-            writeln!(buffer, "<body>")?;
+            write!(buffer, "<body>")?;
             buffer.write_all(&self.data_html.data)?;
-            writeln!(buffer, "</body>")?;
+            write!(buffer, "</body>")?;
         }
 
-        writeln!(buffer, "</html>")?;
+        write!(buffer, "</html>")?;
 
         Ok(())
     }

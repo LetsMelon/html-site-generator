@@ -21,13 +21,13 @@ impl Address {
 
 impl IntoHtmlNode for Address {
     fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
-        writeln!(buffer, "<address>")?;
+        write!(buffer, "<address>")?;
 
         for element in &self.elements {
             element.transform_into_raw_html(buffer)?;
         }
 
-        writeln!(buffer, "</address>")?;
+        write!(buffer, "</address>")?;
 
         Ok(())
     }

@@ -21,13 +21,13 @@ impl Head {
 
 impl IntoHtmlNode for Head {
     fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
-        writeln!(buffer, "<head>")?;
+        write!(buffer, "<head>")?;
 
         for element in &self.elements {
             element.transform_into_raw_html(buffer)?;
         }
 
-        writeln!(buffer, "</head>")?;
+        write!(buffer, "</head>")?;
 
         Ok(())
     }

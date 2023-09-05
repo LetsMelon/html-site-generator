@@ -28,7 +28,7 @@ impl IntoHtmlNode for Meta {
             write!(buffer, " {}=\"{}\"", key, value)?;
         }
 
-        writeln!(buffer, "/>")?;
+        write!(buffer, "/>")?;
 
         Ok(())
     }

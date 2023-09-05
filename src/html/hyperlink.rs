@@ -193,7 +193,7 @@ impl IntoHtmlNode for Hyperlink {
             child.transform_into_raw_html(buffer)?;
         }
 
-        writeln!(buffer, "</a>")?;
+        write!(buffer, "</a>")?;
 
         Ok(())
     }

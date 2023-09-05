@@ -60,19 +60,19 @@ impl IntoHtmlNode for List {
 
         write!(buffer, "<{}", symbol)?;
         self._attributes.transform_into_raw_html(buffer)?;
-        writeln!(buffer, ">")?;
+        write!(buffer, ">")?;
 
         for (element, attribute) in &self.elements {
             write!(buffer, "<li")?;
             attribute.transform_into_raw_html(buffer)?;
-            writeln!(buffer, ">")?;
+            write!(buffer, ">")?;
 
             element.transform_into_raw_html(buffer)?;
 
-            writeln!(buffer, "</li>")?;
+            write!(buffer, "</li>")?;
         }
 
-        writeln!(buffer, "</{}>", symbol)?;
+        write!(buffer, "</{}>", symbol)?;
 
         Ok(())
     }

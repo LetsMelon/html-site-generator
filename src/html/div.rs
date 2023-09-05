@@ -27,13 +27,13 @@ impl IntoHtmlNode for Div {
     fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
         write!(buffer, "<div")?;
         self._attributes.transform_into_raw_html(buffer)?;
-        writeln!(buffer, ">")?;
+        write!(buffer, ">")?;
 
         for element in &self.elements {
             element.transform_into_raw_html(buffer)?;
         }
 
-        writeln!(buffer, "</div>")?;
+        write!(buffer, "</div>")?;
 
         Ok(())
     }

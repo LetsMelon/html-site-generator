@@ -137,7 +137,7 @@ impl IntoHtmlNode for Link {
             write!(buffer, " type=\"{}\"", value)?;
         }
 
-        writeln!(buffer, ">")?;
+        write!(buffer, ">")?;
 
         Ok(())
     }

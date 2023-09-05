@@ -17,7 +17,7 @@ impl Title {
 
 impl IntoHtmlNode for Title {
     fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
-        writeln!(buffer, "<title>{}</title>", self.text)?;
+        write!(buffer, "<title>{}</title>", self.text)?;
 
         Ok(())
     }

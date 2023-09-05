@@ -18,13 +18,13 @@ impl Document {
 
 impl IntoHtmlNode for Document {
     fn transform_into_raw_html(&self, buffer: &mut dyn Write) -> IntoHtmlNodeResult<()> {
-        writeln!(buffer, "<!DOCTYPE html>")?;
-        writeln!(buffer, "<html>")?;
+        write!(buffer, "<!DOCTYPE html>")?;
+        write!(buffer, "<html>")?;
 
         self.head.transform_into_raw_html(buffer)?;
         self.body.transform_into_raw_html(buffer)?;
 
-        writeln!(buffer, "</html>")?;
+        write!(buffer, "</html>")?;
 
         Ok(())
     }
