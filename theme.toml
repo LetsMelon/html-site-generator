@@ -1,0 +1,94 @@
+# shema: https://github.com/CptPotato/helix-themes/blob/main/schemes/edge
+
+default_style = { primary_color = "var(--fg)", secondary_color = "var(--bg0)" }
+
+[styles]
+attribute = { primary_color = "var(--cyan)" }
+type = { primary_color = "var(--yellow)" }
+"type.builtin" = { primary_color = "var(--yellow)" }
+"type.enum" = { primary_color = "todo!(type.enum)", secondary_color = "todo!(type.enum)" }
+"type.enum.variant" = { primary_color = "var(--yellow); font-style: italic;" }                                        # what is the right color?
+constructor = { primary_color = "var(--yellow)" }
+constant = { primary_color = "var(--purple)" }
+"constant.builtin" = { primary_color = "todo!(constant.builtin)", secondary_color = "todo!()" }
+"constant.builtin.boolean" = { primary_color = "todo!(constant.builtin.boolean)", secondary_color = "todo!()" }
+"constant.character" = { primary_color = "todo!(constant.character)", secondary_color = "todo!()" }
+"constant.character.escape" = { primary_color = "var(--cyan)" }
+"constant.numeric" = { primary_color = "var(--green)" }
+"constant.numeric.integer" = { primary_color = "var(--green)" }
+"constant.numeric.float" = { primary_color = "var(--green)" }
+string = { primary_color = "var(--green)" }
+"string.regexp" = { primary_color = "var(--orange)" }
+"string.special" = { primary_color = "todo!(string.special)", secondary_color = "todo!()" }
+"string.special.path" = { primary_color = "todo!(string.special.path)", secondary_color = "todo!()" }
+"string.special.url" = { primary_color = "todo!(string.special.url)", secondary_color = "todo!()" }
+"string.special.symbol" = { primary_color = "todo!(string.special.symbol)", secondary_color = "todo!()" }
+"escape" = { primary_color = "todo!(escape)", secondary_color = "todo!()" }
+comment = { primary_color = "var(--grey)" }
+"comment.line" = { primary_color = "todo!(comment.line)", secondary_color = "todo!()" }
+"comment.block" = { primary_color = "todo!(comment.block)", secondary_color = "todo!()" }
+"comment.block.documentation" = { primary_color = "todo!(comment.block.documentation)", secondary_color = "todo!()" }
+variable = { primary_color = "var(--fg)" }
+"variable.builtin" = { primary_color = "var(--orange)" }
+"variable.parameter" = { primary_color = "var(--fg)" }
+"variable.other" = { primary_color = "todo!(variable.other)", secondary_color = "todo!()" }
+"variable.other.member" = { primary_color = "var(--fg)" }
+label = { primary_color = "var(--orange)" }
+punctuation = { primary_color = "var(--grey)" }
+"punctuation.delimiter" = { primary_color = "var(--grey)" }
+"punctuation.bracket" = { primary_color = "var(--fg)" }
+"punctuation.special" = { primary_color = "todo!(punctuation.special)", secondary_color = "todo!()" }
+keyword = { primary_color = "var(--purple)" }
+"keyword.control" = { primary_color = "var(--purple)" }
+"keyword.control.conditional" = { primary_color = "keyword.control.conditional", secondary_color = "todo!()" }
+"keyword.control.repeat" = { primary_color = "var(--purple)" }
+"keyword.control.import" = { primary_color = "var(--purple)" }
+"keyword.control.return" = { primary_color = "keyword.control.return", secondary_color = "todo!()" }
+"keyword.control.exception" = { primary_color = "keyword.control.exception", secondary_color = "todo!()" }
+"keyword.operator" = { primary_color = "keyword.operator", secondary_color = "todo!()" }
+"keyword.directive" = { primary_color = "var(--cyan)" }
+"keyword.function" = { primary_color = "var(--purple)" }
+"keyword.storage" = { primary_color = "todo!(keyword.storage)", secondary_color = "todo!()" }
+"keyword.storage.type" = { primary_color = "var(--purple)" }
+"keyword.storage.modifier" = { primary_color = "var(--red)" }
+operator = { primary_color = "var(--red)" }
+function = { primary_color = "var(--blue)" }
+"function.builtin" = { primary_color = "var(--blue)" }
+"function.method" = { primary_color = "todo!(function.method)", secondary_color = "todo!()" }
+"function.macro" = { primary_color = "var(--cyan)" }
+"function.special" = { primary_color = "todo!(function.special)", secondary_color = "todo!()" }
+tag = { primary_color = "var(--yellow)" }
+"tag.builtin" = { primary_color = "todo!(tag.builtin)", secondary_color = "todo!()" }
+namespace = { primary_color = "var(--red)" }
+special = { primary_color = "var(--fg)" }                                                                             # maybe change back to cyan
+"markup" = { primary_color = "todo!(markup)", secondary_color = "todo!()" }
+"markup.heading" = { primary_color = "todo!(markup.heading)", secondary_color = "todo!()" }
+"markup.heading.marker" = { primary_color = "todo!(markup.heading.marker)", secondary_color = "todo!()" }
+"markup.heading.1" = { primary_color = "todo!(markup.heading.1)", secondary_color = "todo!()" }
+"markup.heading.2" = { primary_color = "todo!(markup.heading.2)", secondary_color = "todo!()" }
+"markup.heading.3" = { primary_color = "todo!(markup.heading.3)", secondary_color = "todo!()" }
+"markup.heading.4" = { primary_color = "todo!(markup.heading.4)", secondary_color = "todo!()" }
+"markup.heading.5" = { primary_color = "todo!(markup.heading.5)", secondary_color = "todo!()" }
+"markup.heading.6" = { primary_color = "todo!(markup.heading.6)", secondary_color = "todo!()" }
+"markup.list" = { primary_color = "todo!(markup.list)", secondary_color = "todo!()" }
+"markup.list.unnumbered" = { primary_color = "todo!(markup.list.unnumbered)", secondary_color = "todo!()" }
+"markup.list.numbered" = { primary_color = "todo!(markup.list.numbered)", secondary_color = "todo!()" }
+"markup.list.checked" = { primary_color = "todo!(markup.list.checked)", secondary_color = "todo!()" }
+"markup.list.unchecked" = { primary_color = "todo!(markup.list.unchecked)", secondary_color = "todo!()" }
+"markup.bold" = { primary_color = "todo!(markup.bold)", secondary_color = "todo!()" }
+"markup.italic" = { primary_color = "todo!(markup.italic)", secondary_color = "todo!()" }
+"markup.strikethrough" = { primary_color = "todo!(markup.strikethrough)", secondary_color = "todo!()" }
+"markup.link" = { primary_color = "todo!(markup.link)", secondary_color = "todo!()" }
+"markup.link.url" = { primary_color = "todo!(markup.link.url)", secondary_color = "todo!()" }
+"markup.link.label" = { primary_color = "todo!(markup.link.label)", secondary_color = "todo!()" }
+"markup.link.text" = { primary_color = "todo!(markup.link.text)", secondary_color = "todo!()" }
+"markup.quote" = { primary_color = "todo!(markup.quote)", secondary_color = "todo!()" }
+"markup.raw" = { primary_color = "todo!(markup.raw)", secondary_color = "todo!()" }
+"markup.raw.inline" = { primary_color = "todo!(markup.raw.inline)", secondary_color = "todo!()" }
+"markup.raw.block" = { primary_color = "todo!(markup.raw.block)", secondary_color = "todo!()" }
+"diff" = { primary_color = "todo!(diff)", secondary_color = "todo!()" }
+"diff.plus" = { primary_color = "todo!(diff.plus)", secondary_color = "todo!()" }
+"diff.minus" = { primary_color = "todo!(diff.minus)", secondary_color = "todo!()" }
+"diff.delta" = { primary_color = "todo!(diff.delta)", secondary_color = "todo!()" }
+"diff.delta.moved" = { primary_color = "todo!(diff.delta.moved)", secondary_color = "todo!()" }
+module = { primary_color = "var(--red)" }                                                                             # what is that?
