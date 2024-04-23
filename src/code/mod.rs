@@ -75,7 +75,10 @@ impl IntoHtmlNode for CodeBlock<'_> {
                     .unwrap();
             }
             writeln!(buffer, "}}")?;
-            writeln!(buffer, ".code-block pre {{ margin: 0px; }}")?;
+            writeln!(
+                buffer,
+                ".code-block pre {{ margin: 0px; color: var(--fg); }}"
+            )?;
 
             // TODO what happens if two 'components' add values to ':root'
             writeln!(buffer, ":root {{").unwrap();
