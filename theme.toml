@@ -40,7 +40,7 @@ punctuation = { primary_color = "var(--grey)" }
 "punctuation.special" = { primary_color = "todo!(punctuation.special)", secondary_color = "todo!()" }
 keyword = { primary_color = "var(--purple)" }
 "keyword.control" = { primary_color = "var(--purple)" }
-"keyword.control.conditional" = { primary_color = "keyword.control.conditional", secondary_color = "todo!()" }
+"keyword.control.conditional" = { primary_color = "var(--purple)" }
 "keyword.control.repeat" = { primary_color = "var(--purple)" }
 "keyword.control.import" = { primary_color = "var(--purple)" }
 "keyword.control.return" = { primary_color = "keyword.control.return", secondary_color = "todo!()" }
@@ -48,7 +48,7 @@ keyword = { primary_color = "var(--purple)" }
 "keyword.operator" = { primary_color = "keyword.operator", secondary_color = "todo!()" }
 "keyword.directive" = { primary_color = "var(--cyan)" }
 "keyword.function" = { primary_color = "var(--purple)" }
-"keyword.storage" = { primary_color = "todo!(keyword.storage)", secondary_color = "todo!()" }
+"keyword.storage" = { primary_color = "var(--purple)" }
 "keyword.storage.type" = { primary_color = "var(--purple)" }
 "keyword.storage.modifier" = { primary_color = "var(--red)" }
 operator = { primary_color = "var(--red)" }
