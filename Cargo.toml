@@ -20,7 +20,7 @@ inkjet = { version = "0.10.4", default-features = false, features = [
     "theme",
     "language-rust",
 ] }
-thiserror = "1.0.49"
+thiserror = "1.0.61"
 
 [dev-dependencies]
 html_parser = "0.7.0"
